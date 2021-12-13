@@ -1,5 +1,11 @@
 import './App.css'
 import React, { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+
+import Layout from './components/Layout'
+import Home from './components/Home'
+import Navigationbar from './components/Navbar'
+import Todos from './components/Todos'
 
 function App() {
 	const [todos, setTodos] = useState([])
@@ -24,10 +30,16 @@ function App() {
 	}
 
 	return (
-		<div className='App'>
-			<h1>Hello world</h1>
+		<Layout>
+			<Router>
+				<Navigationbar />
+				<Routes>
+					<Route exact path='/' element={<Home />} />
+					<Route path='/todos' element={<Todos />} />
+				</Routes>
+			</Router>
 			<p>{todos}</p>
-		</div>
+		</Layout>
 	)
 }
 
