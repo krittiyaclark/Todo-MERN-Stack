@@ -1,13 +1,29 @@
-import { useState, useContext, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 import CreateTodo from './CreateTodo'
+import TodoService from '../services/TodoService'
 
 const Todos = () => {
 	const [clicked, setClicked] = useState(false)
 	const [todo, setTodo] = useState({ item: '' })
 	const [todos, setTodos] = useState([])
 	const [rawTodos, setRawTodos] = useState([])
-	const [createProject, setCreateProject] = useState({ name: '' })
+	const [message, setMessage] = useState(null)
+
+	useEffect(() => {
+		console.log('First render')
+		TodoService.getTodos().then((data) => {
+			console.log('Sec render')
+
+			console.log(data)
+			setRawTodos(data.todos)
+			setTodos(
+				data.todos.filter((todo) =>
+					clicked ? todo.completed : !todo.completed
+				)
+			)
+		})
+	}, [])
 
 	function handleTodoChange(todo) {
 		setTodo(todo)
@@ -15,6 +31,69 @@ const Todos = () => {
 
 	function handleTodoSubmit(todo) {
 		console.log(todo)
+		TodoService.createTodo(todo).then((data) => {
+			console.log(data)
+			if (!message.msgError) {
+				setRawTodos(data.todos)
+				const filteredTodos = data.todos.filter((todo) => !todo.completed)
+				setClicked(false)
+				setTodos(filteredTodos)
+				resetTodoForm()
+			} else if (message.msgBody === 'Unauthorized') {
+				setMessage(message)
+			} else {
+				setMessage(message)
+			}
+		})
+	}
+
+	function resetTodoForm() {
+		setTodo({ item: '' })
+	}
+
+	function handleRemoveTodo(todoID) {
+		TodoService.removeTodo(todoID)
+			.then((data) => console.log(data))
+			.catch((err) => {
+				console.log(err)
+				setMessage(message)
+			})
+
+		TodoService.getTodos()
+			.then((data) => {
+				setRawTodos(data.todos)
+				const filteredTodos = data.todos
+					.filter((todo) => todo._id !== todoID)
+					.filter(
+						(todo) => project === 'all-projects' || todo.project._id === project
+					)
+					.filter((todo) => (clicked ? todo.completed : !todo.completed))
+				setTodos(filteredTodos)
+			})
+			.catch((err) => {
+				console.log(err)
+				setMessage(message)
+			})
+	}
+
+	function handleToggleComplete(todo) {
+		TodoService.toggleComplete(todo._id)
+			.then((data) => {
+				console.log(data)
+				TodoService.getTodos().then((data) => {
+					setRawTodos(data.todos)
+					const filteredTodos = data.todos
+						.filter(
+							(todo) =>
+								project === 'all-projects' || todo.project._id === project
+						)
+						.filter((todo) => (clicked ? todo.completed : !todo.completed))
+					setTodos(filteredTodos)
+				})
+			})
+			.catch((err) => {
+				console.log(err)
+			})
 	}
 
 	return (
@@ -24,6 +103,7 @@ const Todos = () => {
 				onTodoChange={handleTodoChange}
 				onTodoSubmit={handleTodoSubmit}
 			/>
+			{console.log(todo)}
 		</div>
 	)
 }

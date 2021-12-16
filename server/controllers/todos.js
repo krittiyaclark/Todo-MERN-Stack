@@ -19,11 +19,11 @@ module.exports = {
 		console.log(req.body)
 
 		const todo = await Todo.create({
-			item: req.body.item,
+			todo: req.body.todo,
 			created: Date.now(),
 			completed: false,
 		})
-		console.log('line 55:' + todo)
+		console.log(todo)
 		await todo.save((err) => {
 			if (err)
 				res
