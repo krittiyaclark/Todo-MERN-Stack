@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 const CreateTodo = ({ onTodoChange, onTodoSubmit, todo }) => {
 	function handleSubmit(e) {
 		e.preventDefault()
@@ -19,8 +17,10 @@ const CreateTodo = ({ onTodoChange, onTodoSubmit, todo }) => {
 
 	return (
 		<>
-			<form onSubmit={handleSubmit}>
-				<label htmlFor='todo'>Enter Todo</label>
+			<form onSubmit={handleSubmit} className='mb-5'>
+				<label htmlFor='todo' className='font'>
+					Enter Todo
+				</label>
 				<input
 					type='text'
 					name='todo'
@@ -29,7 +29,9 @@ const CreateTodo = ({ onTodoChange, onTodoSubmit, todo }) => {
 					className='form-control'
 					placeholder='Enter Todo'
 				/>
-				<button className='btn btn-lg btn-primary btn-block' type='submit'>
+				<button
+					className='btn btn-lg btn-primary btn-block btn-sm mt-4'
+					type='submit'>
 					Submit
 				</button>
 			</form>

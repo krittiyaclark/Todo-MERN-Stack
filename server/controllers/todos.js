@@ -22,6 +22,7 @@ module.exports = {
 				created: Date.now(),
 				completed: false,
 			})
+			// res.redirect('/todos')
 		} catch (err) {
 			res
 				.status(500)

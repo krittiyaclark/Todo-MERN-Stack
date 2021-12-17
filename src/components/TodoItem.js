@@ -28,18 +28,18 @@ const TodoItem = ({ todo, onRemove, onToggleComplete }) => {
 	date = date.join('')
 
 	return (
-		<section>
+		<section className='todo-list'>
 			<ul>
-				<li>
-					<p
-						onClick={handleToggleComplete}
-						className={toggle ? 'completed' : 'not'}>
-						{todo.todo}
-					</p>
-					<p>{date}</p>
-					<Button variant='danger' onClick={handleRemove}>
-						Remove
-					</Button>
+				<li className='p-2'>
+					<div className='d-flex flex-row justify-content-between align-items-baseline'>
+						<p
+							onClick={handleToggleComplete}
+							className={toggle ? 'completed' : 'not'}>
+							{todo.todo}
+						</p>
+						<i className='fa fa-trash ml-auto' onClick={handleRemove}></i>
+					</div>
+					<time>{date}</time>
 				</li>
 			</ul>
 		</section>

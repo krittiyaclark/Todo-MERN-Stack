@@ -8,7 +8,9 @@ const Layout = ({ children }) => {
 			<main className='text-dark'>
 				<Container className='vh-100'>
 					<Row>
-						<Col md={{ span: 6, offset: 3 }}>{children}</Col>
+						<Col md={{ span: 6, offset: 3 }} className='vh-100 background'>
+							{children}
+						</Col>
 					</Row>
 				</Container>
 			</main>

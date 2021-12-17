@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import CreateTodo from './CreateTodo'
 import TodoService from '../services/TodoService'
@@ -10,11 +11,19 @@ const Todos = () => {
 	const [todos, setTodos] = useState([])
 	const [message, setMessage] = useState(null)
 
+	const navigate = useNavigate()
+
 	useEffect(() => {
 		console.log('First render')
 		TodoService.getTodos().then((data) => {
+			// data comes from controller getTodos: -- >
+			// todos: todos,
+			// count: todosCount
 			console.log('Sec render')
-			// data comes from controller --> todos: todos,count: todosCount
+			// todo comes from controller addTodo: -->
+			// todo: req.body.todo,
+			// created: Date.now(),
+			// completed: false,
 			setTodos(
 				data.todos.filter((todo) =>
 					clicked ? todo.completed : !todo.completed
@@ -36,16 +45,17 @@ const Todos = () => {
 		TodoService.createTodo(todo).then((data) => {
 			const { message } = data
 
+			console.log(`'message' ${message}`)
 			if (!message.msgError) {
 				const filteredTodos = data.todos.filter((todo) => !todo.completed)
 				setClicked(false)
 				setTodos(filteredTodos)
 				resetTodoForm()
-			} else if (message.msgBody === 'Unauthorized') {
-				setMessage(message)
 			} else {
 				setMessage(message)
 			}
+
+			// navigate('/todos')
 		})
 	}
 
@@ -57,7 +67,7 @@ const Todos = () => {
 		TodoService.removeTodo(todoID)
 			.then((data) => console.log(data))
 			.catch((err) => {
-				console.log(err)
+				// console.log(err)
 				setMessage(message)
 			})
 
@@ -66,7 +76,7 @@ const Todos = () => {
 				const filteredTodos = data.todos
 					.filter((todo) => todo._id !== todoID)
 					.filter((todo) => (clicked ? todo.completed : !todo.completed))
-				setTodos(filteredTodos)
+				setTodos([...filteredTodos])
 			})
 			.catch((err) => {
 				console.log(err)
@@ -79,11 +89,11 @@ const Todos = () => {
 			.then((data) => {
 				console.log(data)
 				TodoService.getTodos().then((data) => {
-					setRawTodos(data.todos)
 					const filteredTodos = data.todos.filter((todo) =>
 						clicked ? todo.completed : !todo.completed
 					)
-					setTodos(filteredTodos)
+					// setTodos(filteredTodos)
+					setTodos([...filteredTodos])
 				})
 			})
 			.catch((err) => {
@@ -92,7 +102,7 @@ const Todos = () => {
 	}
 
 	return (
-		<div>
+		<section className='mt-5'>
 			<CreateTodo
 				todo={todo}
 				onTodoChange={handleTodoChange}
@@ -109,7 +119,7 @@ const Todos = () => {
 						/>
 					)
 				})}
-		</div>
+		</section>
 	)
 }
 

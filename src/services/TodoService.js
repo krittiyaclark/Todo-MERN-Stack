@@ -25,7 +25,7 @@ export default {
 			if (response.status !== 401) {
 				return response.json().then((data) => data)
 			} else {
-				return { message: { msgBody: 'Unauthorized', msgError: true } }
+				return { message: { msgBody: 'Error has occured', msgError: true } }
 			}
 		})
 	},
@@ -42,7 +42,7 @@ export default {
 			if (response.status !== 401) {
 				return response.json().then((data) => data)
 			} else {
-				return { message: { msgBody: 'Unauthorized', msgError: true } }
+				return { message: { msgBody: 'Error has occured', msgError: true } }
 			}
 		})
 	},
@@ -57,7 +57,7 @@ export default {
 			if (response.status !== 401) {
 				return response.json().then((data) => data)
 			} else {
-				return { message: { msgBody: 'Unauthorized', msgError: true } }
+				return { message: { msgBody: 'Error has occured', msgError: true } }
 			}
 		})
 	},
