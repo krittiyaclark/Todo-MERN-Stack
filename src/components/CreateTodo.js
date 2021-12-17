@@ -16,7 +16,7 @@ const CreateTodo = ({ onTodoChange, onTodoSubmit, todo }) => {
 	}
 
 	function handleChange(e) {
-		onTodoChange({ item: e.target.value })
+		onTodoChange({ todo: e.target.value })
 	}
 
 	return (
@@ -26,7 +26,7 @@ const CreateTodo = ({ onTodoChange, onTodoSubmit, todo }) => {
 				<input
 					type='text'
 					name='todo'
-					value={todo.item}
+					value={todo.todo}
 					onChange={handleChange}
 					className='form-control'
 					placeholder='Enter Todo'

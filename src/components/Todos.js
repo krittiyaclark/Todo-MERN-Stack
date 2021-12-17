@@ -5,7 +5,7 @@ import TodoService from '../services/TodoService'
 
 const Todos = () => {
 	const [clicked, setClicked] = useState(false)
-	const [todo, setTodo] = useState({ item: '' })
+	const [todo, setTodo] = useState({ todo: '' })
 	const [todos, setTodos] = useState([])
 	const [rawTodos, setRawTodos] = useState([])
 	const [message, setMessage] = useState(null)
@@ -38,7 +38,7 @@ const Todos = () => {
 			console.log(data)
 			if (!message.msgError) {
 				setRawTodos(data.todos)
-				const filteredTodos = data.todos.filter((todo) => !todo.completed)
+				const filteredTodos = data.item.filter((todo) => !todo.completed)
 				setClicked(false)
 				setTodos(filteredTodos)
 				resetTodoForm()
@@ -51,7 +51,7 @@ const Todos = () => {
 	}
 
 	function resetTodoForm() {
-		setTodo({ item: '' })
+		setTodo({ todo: '' })
 	}
 
 	function handleRemoveTodo(todoID) {

@@ -4,11 +4,12 @@ require('dotenv').config({
 })
 
 const express = require('express')
+const connectDB = require('./db')
 const rootRouter = require('./routes')
 const todoRoutes = require('./routes/todos')
 
 // Initialize the MongoDB Connection
-require('./db')
+connectDB()
 
 const { NODE_ENV, PORT } = process.env
 

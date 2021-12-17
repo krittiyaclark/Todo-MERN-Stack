@@ -15,34 +15,19 @@ module.exports = {
 		}
 	},
 	addTodo: async (req, res) => {
-		console.log('req.body: ')
-		console.log(req.body.todo)
+		console.log(`req.body: ${req.body.todo}`)
 
-		const todo = await Todo.create({
-			todo: req.body.todo,
-			created: Date.now(),
-			completed: false,
-		})
-		console.log(todo)
-		await todo.save((err) => {
-			if (err)
-				res
-					.status(500)
-					.json({ message: { msgBody: 'Error has occured', msgError: true } })
-			else {
-				req.todos.push(todo)
-				req.user.save((err) => {
-					if (err)
-						res.status(500).json({
-							message: { msgBody: 'Error has occured', msgError: true },
-						})
-					else
-						res
-							.status(200)
-							.json({ message: { msgBody: 'Todo created!', msgError: false } })
-				})
-			}
-		})
+		try {
+			await Todo.create({
+				todo: req.body.todo,
+				created: Date.now(),
+				completed: false,
+			})
+		} catch (err) {
+			res
+				.status(500)
+				.json({ message: { msgBody: 'Error has occured', msgError: true } })
+		}
 	},
 	toggleComplete: async (req, res) => {
 		console.log('blah ' + req.body.todoID)

@@ -12,11 +12,11 @@ export default {
 	},
 	createTodo: (todo) => {
 		console.log('todo service: ')
-		console.log(todo.item)
+		console.log(todo.todo)
 		return fetch('/todos/addTodo', {
 			method: 'POST',
 			body: JSON.stringify({
-				item: todo.item,
+				todo: todo.todo,
 			}),
 			headers: {
 				'Content-Type': 'application/json',
