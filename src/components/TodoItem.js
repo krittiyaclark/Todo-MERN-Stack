@@ -1,14 +1,16 @@
+import { useNavigate } from 'react-router-dom'
+import { Button } from 'react-bootstrap'
+
 import TodoService from '../services/TodoService'
 
 const TodoItem = ({ todo, onRemove, onToggleComplete }) => {
+	const todoID = todo._id
+	const navigate = useNavigate()
+
 	const handleRemove = (e) => {
-		TodoService.removeTodo(todoID)
-			.then((data) => console.log(data))
-			.then((data) => {
-				console.log(data.message)
-				if (data.message.msgError) console.log('error will robinson!')
-				history.push('/todos')
-			})
+		TodoService.removeTodo(todoID).then((data) => console.log(data))
+		navigate('/todos')
+
 		onRemove(todoID)
 	}
 
@@ -25,7 +27,9 @@ const TodoItem = ({ todo, onRemove, onToggleComplete }) => {
 				<li>
 					<p>{todo.todo}</p>
 					<p>{date}</p>
-					<button onClick={handleRemove}>Remove</button>
+					<Button variant='danger' onClick={handleRemove}>
+						Remove
+					</Button>
 				</li>
 			</ul>
 		</section>

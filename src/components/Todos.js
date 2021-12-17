@@ -69,9 +69,6 @@ const Todos = () => {
 				setRawTodos(data.todos)
 				const filteredTodos = data.todos
 					.filter((todo) => todo._id !== todoID)
-					.filter(
-						(todo) => project === 'all-projects' || todo.project._id === project
-					)
 					.filter((todo) => (clicked ? todo.completed : !todo.completed))
 				setTodos(filteredTodos)
 			})
