@@ -16,7 +16,6 @@ module.exports = {
 	},
 	addTodo: async (req, res) => {
 		console.log(`req.body: ${req.body.todo}`)
-
 		try {
 			await Todo.create({
 				todo: req.body.todo,

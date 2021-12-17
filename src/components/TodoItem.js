@@ -1,9 +1,12 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button } from 'react-bootstrap'
 
 import TodoService from '../services/TodoService'
 
 const TodoItem = ({ todo, onRemove, onToggleComplete }) => {
+	const [toggle, setToggle] = useState(false)
+
 	const todoID = todo._id
 	const navigate = useNavigate()
 
@@ -14,6 +17,9 @@ const TodoItem = ({ todo, onRemove, onToggleComplete }) => {
 		onRemove(todoID)
 	}
 
+	const handleToggleComplete = () => {
+		setToggle(!toggle)
+	}
 	// Date Formatting
 	let date = new Date(todo.created).toDateString()
 	date = date.split('')
@@ -25,7 +31,11 @@ const TodoItem = ({ todo, onRemove, onToggleComplete }) => {
 		<section>
 			<ul>
 				<li>
-					<p>{todo.todo}</p>
+					<p
+						onClick={handleToggleComplete}
+						className={toggle ? 'completed' : 'not'}>
+						{todo.todo}
+					</p>
 					<p>{date}</p>
 					<Button variant='danger' onClick={handleRemove}>
 						Remove

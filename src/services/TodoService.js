@@ -12,7 +12,7 @@ export default {
 	},
 	createTodo: (todo) => {
 		console.log('todo service: ')
-		console.log(todo.todo)
+		console.log(todo)
 		return fetch('/todos/addTodo', {
 			method: 'POST',
 			body: JSON.stringify({

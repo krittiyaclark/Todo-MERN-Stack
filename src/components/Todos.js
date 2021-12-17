@@ -8,7 +8,6 @@ const Todos = () => {
 	const [clicked, setClicked] = useState(false)
 	const [todo, setTodo] = useState({ todo: '' })
 	const [todos, setTodos] = useState([])
-	const [rawTodos, setRawTodos] = useState([])
 	const [message, setMessage] = useState(null)
 
 	useEffect(() => {
@@ -16,7 +15,6 @@ const Todos = () => {
 		TodoService.getTodos().then((data) => {
 			console.log('Sec render')
 			// data comes from controller --> todos: todos,count: todosCount
-			setRawTodos(data.todos)
 			setTodos(
 				data.todos.filter((todo) =>
 					clicked ? todo.completed : !todo.completed
@@ -25,7 +23,7 @@ const Todos = () => {
 		})
 	}, [])
 
-	if (!todos) {
+	if (!todo) {
 		return <p>Loading...</p>
 	}
 
@@ -35,12 +33,11 @@ const Todos = () => {
 	}
 
 	function handleTodoSubmit(todo) {
-		console.log(todo)
 		TodoService.createTodo(todo).then((data) => {
-			console.log(data)
+			const { message } = data
+
 			if (!message.msgError) {
-				setRawTodos(data.todos)
-				const filteredTodos = data.item.filter((todo) => !todo.completed)
+				const filteredTodos = data.todos.filter((todo) => !todo.completed)
 				setClicked(false)
 				setTodos(filteredTodos)
 				resetTodoForm()
@@ -66,7 +63,6 @@ const Todos = () => {
 
 		TodoService.getTodos()
 			.then((data) => {
-				setRawTodos(data.todos)
 				const filteredTodos = data.todos
 					.filter((todo) => todo._id !== todoID)
 					.filter((todo) => (clicked ? todo.completed : !todo.completed))
@@ -84,12 +80,9 @@ const Todos = () => {
 				console.log(data)
 				TodoService.getTodos().then((data) => {
 					setRawTodos(data.todos)
-					const filteredTodos = data.todos
-						.filter(
-							(todo) =>
-								project === 'all-projects' || todo.project._id === project
-						)
-						.filter((todo) => (clicked ? todo.completed : !todo.completed))
+					const filteredTodos = data.todos.filter((todo) =>
+						clicked ? todo.completed : !todo.completed
+					)
 					setTodos(filteredTodos)
 				})
 			})
@@ -101,7 +94,7 @@ const Todos = () => {
 	return (
 		<div>
 			<CreateTodo
-				todo={todos}
+				todo={todo}
 				onTodoChange={handleTodoChange}
 				onTodoSubmit={handleTodoSubmit}
 			/>
