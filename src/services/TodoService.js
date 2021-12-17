@@ -1,6 +1,7 @@
 export default {
 	getTodos: () => {
 		return fetch('/todos').then((response) => {
+			console.log(response)
 			// Sends a 401 status if unathenticated
 			if (response.status !== 401) {
 				return response.json().then((data) => data)
@@ -11,7 +12,7 @@ export default {
 	},
 	createTodo: (todo) => {
 		console.log('todo service: ')
-		console.log(todo)
+		console.log(todo.item)
 		return fetch('/todos/addTodo', {
 			method: 'POST',
 			body: JSON.stringify({

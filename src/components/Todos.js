@@ -14,8 +14,7 @@ const Todos = () => {
 		console.log('First render')
 		TodoService.getTodos().then((data) => {
 			console.log('Sec render')
-
-			console.log(data)
+			// data comes from controller --> todos: todos,count: todosCount
 			setRawTodos(data.todos)
 			setTodos(
 				data.todos.filter((todo) =>
@@ -24,6 +23,10 @@ const Todos = () => {
 			)
 		})
 	}, [])
+
+	if (!todos) {
+		return <p>Loading...</p>
+	}
 
 	function handleTodoChange(todo) {
 		setTodo(todo)

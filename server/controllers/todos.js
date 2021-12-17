@@ -5,7 +5,7 @@ module.exports = {
 	getTodos: async (req, res) => {
 		try {
 			let todos = await Todo.find()
-			let todosCount = await Todo.countDocuments()
+			let todosCount = await Todo.countDocuments({ completed: false })
 			res.json({
 				todos: todos,
 				count: todosCount,
@@ -16,7 +16,7 @@ module.exports = {
 	},
 	addTodo: async (req, res) => {
 		console.log('req.body: ')
-		console.log(req.body)
+		console.log(req.body.todo)
 
 		const todo = await Todo.create({
 			todo: req.body.todo,
@@ -71,8 +71,7 @@ module.exports = {
 		try {
 			await Todo.findOneAndDelete({ _id: req.body.todoID })
 
-			const user = await User.findById(req.user._id)
-			user.todos.splice(user.todos.indexOf(req.body.todoID), 1)
+			todos.splice(todos.indexOf(req.body.todoID), 1)
 			todos.save()
 
 			console.log('Deleted Todo')

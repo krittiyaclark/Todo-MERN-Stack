@@ -1,10 +1,18 @@
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 
 const CreateTodo = ({ onTodoChange, onTodoSubmit, todo }) => {
+	const [todos, setTodos] = useState([])
+
 	function handleSubmit(e) {
 		e.preventDefault()
 		console.log(todo)
 		onTodoSubmit(todo)
+		setTodos([])
+
+		if (!todos) {
+			alert('Please add task')
+			return
+		}
 	}
 
 	function handleChange(e) {
