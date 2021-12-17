@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 
 import CreateTodo from './CreateTodo'
 import TodoService from '../services/TodoService'
+import TodoItem from './TodoItem'
 
 const Todos = () => {
 	const [clicked, setClicked] = useState(false)
@@ -28,6 +29,7 @@ const Todos = () => {
 		return <p>Loading...</p>
 	}
 
+	console.log(todos)
 	function handleTodoChange(todo) {
 		setTodo(todo)
 	}
@@ -102,11 +104,21 @@ const Todos = () => {
 	return (
 		<div>
 			<CreateTodo
-				todo={todo}
+				todo={todos}
 				onTodoChange={handleTodoChange}
 				onTodoSubmit={handleTodoSubmit}
 			/>
-			{console.log(todo)}
+			{todos &&
+				todos.map((todo) => {
+					return (
+						<TodoItem
+							key={todo._id}
+							todo={todo}
+							onRemove={handleRemoveTodo}
+							onToggleComplete={handleToggleComplete}
+						/>
+					)
+				})}
 		</div>
 	)
 }

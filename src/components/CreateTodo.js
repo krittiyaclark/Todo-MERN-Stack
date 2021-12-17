@@ -1,13 +1,13 @@
 import { useState } from 'react'
 
-const CreateTodo = ({ onTodoChange, onTodoSubmit, todo }) => {
-	const [todos, setTodos] = useState([])
+const CreateTodo = ({ onTodoChange, onTodoSubmit, todos }) => {
+	const [todo, setTodo] = useState([])
 
 	function handleSubmit(e) {
 		e.preventDefault()
-		console.log(todo)
-		onTodoSubmit(todo)
-		setTodos([])
+		console.log(todos)
+		onTodoSubmit(todos)
+		setTodo([])
 
 		if (!todos) {
 			alert('Please add task')
