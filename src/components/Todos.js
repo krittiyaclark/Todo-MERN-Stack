@@ -44,18 +44,19 @@ const Todos = () => {
 	function handleTodoSubmit(todo) {
 		TodoService.createTodo(todo).then((data) => {
 			const { message } = data
+			console.log(data)
 
 			console.log(`'message' ${message}`)
-			if (!message.msgError) {
+			if (message && !message.msgError) {
 				const filteredTodos = data.todos.filter((todo) => !todo.completed)
 				setClicked(false)
 				setTodos(filteredTodos)
 				resetTodoForm()
+				location.reload()
+				// navigate('/todos')
 			} else {
 				setMessage(message)
 			}
-
-			// navigate('/todos')
 		})
 	}
 

@@ -27,7 +27,7 @@ body {
 }
 
 .completed {
-	text-decoration: line-through;
+	text-decoration: line-through !important;
 	color: gray;
 }
 

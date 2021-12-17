@@ -1,4 +1,3 @@
-const path = require('path')
 const Todo = require('../models/Todo')
 
 module.exports = {
@@ -24,31 +23,20 @@ module.exports = {
 			})
 			// res.redirect('/todos')
 		} catch (err) {
-			res
-				.status(500)
-				.json({ message: { msgBody: 'Error has occured', msgError: true } })
+			console.log(err)
 		}
 	},
 	toggleComplete: async (req, res) => {
 		console.log('blah ' + req.body.todoID)
 		try {
 			await Todo.findById(req.body.todoID, (err, todo) => {
-				if (err)
-					res
-						.status(500)
-						.json({ message: { msgBody: 'Error has occured', msgError: true } })
-				else {
-					res.status(200).json({
-						message: { msgBody: 'Todo complete toggled!', msgError: false },
-					})
-					todo.completed = !todo.completed
-					todo.save()
+				if (err) {
+					console.log(err)
 				}
+				todo.completed = !todo.completed
 			})
 		} catch (err) {
-			res
-				.status(500)
-				.json({ message: { msgBody: 'Error has occured', msgError: true } })
+			console.log(err)
 		}
 	},
 	removeTodo: async (req, res) => {
@@ -56,15 +44,10 @@ module.exports = {
 		try {
 			await Todo.findOneAndDelete({ _id: req.body.todoID })
 
-			todos.splice(todos.indexOf(req.body.todoID), 1)
-			todos.save()
-
 			console.log('Deleted Todo')
 			res.json('Deleted Todo')
 		} catch (err) {
-			res
-				.status(500)
-				.json({ message: { msgBody: 'Error has occured', msgError: true } })
+			console.log(err)
 		}
 	},
 }
