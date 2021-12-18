@@ -2,17 +2,14 @@ export default {
 	getTodos: () => {
 		return fetch('/todos').then((response) => {
 			console.log(response)
-			// Sends a 401 status if unathenticated
-			if (response.status !== 401) {
-				return response.json().then((data) => data)
-			} else {
-				return { message: { msgBody: 'Unauthorized', msgError: true } }
-			}
+
+			return response.json().then((data) => data)
 		})
 	},
 	createTodo: (todo) => {
 		console.log('todo service: ')
 		console.log(todo)
+		// todo comes from useState todo
 		return fetch('/todos/addTodo', {
 			method: 'POST',
 			body: JSON.stringify({
@@ -22,11 +19,7 @@ export default {
 				'Content-Type': 'application/json',
 			},
 		}).then((response) => {
-			if (response.status !== 401) {
-				return response.json().then((data) => data)
-			} else {
-				return { message: { msgBody: 'Error has occured', msgError: true } }
-			}
+			response.json()
 		})
 	},
 	toggleComplete: (todoID) => {
@@ -39,11 +32,8 @@ export default {
 				todoID: todoID,
 			}),
 		}).then((response) => {
-			if (response.status !== 401) {
-				return response.json().then((data) => data)
-			} else {
-				return { message: { msgBody: 'Error has occured', msgError: true } }
-			}
+			location.reload()
+			response.json()
 		})
 	},
 	removeTodo: (id) => {
@@ -54,11 +44,7 @@ export default {
 			}),
 			headers: { 'Content-Type': 'application/json' },
 		}).then((response) => {
-			if (response.status !== 401) {
-				return response.json().then((data) => data)
-			} else {
-				return { message: { msgBody: 'Unauthorized', msgError: true } }
-			}
+			response.json()
 		})
 	},
 }

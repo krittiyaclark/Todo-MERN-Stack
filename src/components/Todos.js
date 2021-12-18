@@ -8,10 +8,8 @@ import TodoItem from './TodoItem'
 const Todos = () => {
 	const [clicked, setClicked] = useState(false)
 	const [todo, setTodo] = useState({ todo: '' })
+	// Get todo from database
 	const [todos, setTodos] = useState([])
-	const [message, setMessage] = useState(null)
-
-	const navigate = useNavigate()
 
 	useEffect(() => {
 		console.log('First render')
@@ -41,21 +39,18 @@ const Todos = () => {
 		setTodo(todo)
 	}
 
-	function handleTodoSubmit(todo) {
+	function handleTodoSubmit() {
 		TodoService.createTodo(todo).then((data) => {
-			const { message } = data
 			console.log(data)
-
-			console.log(`'message' ${message}`)
-			if (message && !message.msgError) {
-				const filteredTodos = data.todos.filter((todo) => !todo.completed)
+			resetTodoForm()
+			TodoService.getTodos().then((getData) => {
 				setClicked(false)
-				setTodos(filteredTodos)
-				resetTodoForm()
-				location.reload()
-				// navigate('/todos')
-			} else {
-				setMessage(message)
+				setTodos(getData.todos)
+			})
+
+			if (!todo) {
+				alert('Please add task')
+				return
 			}
 		})
 	}
@@ -64,12 +59,11 @@ const Todos = () => {
 		setTodo({ todo: '' })
 	}
 
-	function handleRemoveTodo(todoID) {
+	function handleRemoveTodo(todoID, e) {
 		TodoService.removeTodo(todoID)
 			.then((data) => console.log(data))
 			.catch((err) => {
-				// console.log(err)
-				setMessage(message)
+				console.log(err)
 			})
 
 		TodoService.getTodos()
@@ -81,7 +75,6 @@ const Todos = () => {
 			})
 			.catch((err) => {
 				console.log(err)
-				setMessage(message)
 			})
 	}
 

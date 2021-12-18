@@ -10,6 +10,8 @@ const TodoItem = ({ todo, onRemove, onToggleComplete }) => {
 	const navigate = useNavigate()
 
 	const handleRemove = (e) => {
+		e.preventDefault()
+
 		TodoService.removeTodo(todoID).then((data) => console.log(data))
 		navigate('/todos')
 

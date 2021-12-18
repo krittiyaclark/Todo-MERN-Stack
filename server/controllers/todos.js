@@ -21,7 +21,7 @@ module.exports = {
 				created: Date.now(),
 				completed: false,
 			})
-			// res.redirect('/todos')
+			res.redirect('/todos')
 		} catch (err) {
 			console.log(err)
 		}
