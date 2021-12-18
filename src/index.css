@@ -26,6 +26,10 @@ body {
 	padding-left: 0;
 }
 
+.navbar-nav ul li a:hover {
+	color: #bdb7b7;
+}
+
 .completed {
 	text-decoration: line-through !important;
 	color: gray;
@@ -51,6 +55,7 @@ label.font {
 
 .todo-list ul li {
 	background: #f5f5f5;
+	cursor: pointer;
 }
 
 .todo-list ul li div > p {

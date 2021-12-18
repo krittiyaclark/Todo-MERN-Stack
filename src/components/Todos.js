@@ -47,11 +47,6 @@ const Todos = () => {
 				setClicked(false)
 				setTodos(getData.todos)
 			})
-
-			if (!todo) {
-				alert('Please add task')
-				return
-			}
 		})
 	}
 
@@ -59,7 +54,7 @@ const Todos = () => {
 		setTodo({ todo: '' })
 	}
 
-	function handleRemoveTodo(todoID, e) {
+	function handleRemoveTodo(todoID) {
 		TodoService.removeTodo(todoID)
 			.then((data) => console.log(data))
 			.catch((err) => {
