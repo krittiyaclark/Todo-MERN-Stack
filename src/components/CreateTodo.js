@@ -1,14 +1,16 @@
 const CreateTodo = ({ onTodoChange, onTodoSubmit, todo }) => {
 	function handleSubmit(e) {
 		e.preventDefault()
-		console.log(todo)
-		onTodoSubmit(todo)
 
 		if (!todo.todo) {
 			alert('Please add task')
 			return
 		}
+
+		console.log(todo)
+		onTodoSubmit(todo)
 	}
+
 
 	function handleChange(e) {
 		onTodoChange({ todo: e.target.value })
