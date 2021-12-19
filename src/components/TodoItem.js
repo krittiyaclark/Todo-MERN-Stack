@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import TodoService from '../services/TodoService'
 
@@ -7,16 +6,9 @@ const TodoItem = ({ todo, onRemove, onToggleComplete }) => {
 	const [toggle, setToggle] = useState(false)
 
 	const todoID = todo._id
-	const navigate = useNavigate()
-	console.log(todoID)
-	console.log(onToggleComplete)
 
 	const handleRemove = (e) => {
 		e.preventDefault()
-		console.log(todoID)
-
-		TodoService.removeTodo(todoID).then((data) => console.log(data))
-		// navigate('/todos')
 
 		onRemove(todoID)
 	}

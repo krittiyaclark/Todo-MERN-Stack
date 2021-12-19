@@ -32,6 +32,6 @@ if (NODE_ENV !== 'development') {
 	console.log(`Running in development mode. Disabling get from build`)
 }
 
-server.listen(PORT, () => {
+server.listen(PORT || 3000, () => {
 	console.log(`Server listening on port ${PORT}.`)
 })

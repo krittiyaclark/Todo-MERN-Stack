@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import CreateTodo from './CreateTodo'
 import TodoService from '../services/TodoService'
@@ -12,12 +11,10 @@ const Todos = () => {
 	const [todos, setTodos] = useState([])
 
 	useEffect(() => {
-		console.log('First render')
 		TodoService.getTodos().then((data) => {
 			// data comes from controller getTodos: -- >
 			// todos: todos,
 			// count: todosCount
-			console.log('Sec render')
 			// todo comes from controller addTodo: -->
 			// todo: req.body.todo,
 			// created: Date.now(),
@@ -30,18 +27,12 @@ const Todos = () => {
 		})
 	}, [])
 
-	if (!todo) {
-		return <p>Loading...</p>
-	}
-
-	console.log(todos)
 	function handleTodoChange(todo) {
 		setTodo(todo)
 	}
 
 	function handleTodoSubmit() {
 		TodoService.createTodo(todo).then((data) => {
-			console.log(data)
 			resetTodoForm()
 			TodoService.getTodos().then((getData) => {
 				setClicked(false)
@@ -55,8 +46,6 @@ const Todos = () => {
 	}
 
 	function handleRemoveTodo(todoID) {
-		console.log(todo._id)
-
 		TodoService.removeTodo(todoID)
 			.then((data) => console.log(data))
 			.catch((err) => {
@@ -65,9 +54,7 @@ const Todos = () => {
 
 		TodoService.getTodos()
 			.then((data) => {
-				const filteredTodos = data.todos
-					.filter((todo) => todo._id !== todoID)
-					.filter((todo) => (clicked ? todo.completed : !todo.completed))
+				const filteredTodos = data.todos.filter((todo) => todo._id !== todoID)
 				setTodos([...filteredTodos])
 			})
 			.catch((err) => {
@@ -76,7 +63,6 @@ const Todos = () => {
 	}
 
 	function handleToggleComplete(todo) {
-		console.log(todo._id)
 		TodoService.toggleComplete(todo._id)
 			.then((data) => {
 				console.log(data)
@@ -84,7 +70,6 @@ const Todos = () => {
 					const filteredTodos = data.todos.filter((todo) =>
 						clicked ? todo.completed : !todo.completed
 					)
-					// setTodos(filteredTodos)
 					setTodos([...filteredTodos])
 				})
 			})
