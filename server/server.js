@@ -19,6 +19,10 @@ const server = express()
 server.use(express.urlencoded({ extended: false }))
 server.use(express.json())
 
+// Core
+const cors = require('cors')
+server.use(cors())
+
 server.use('/', rootRouter)
 server.use('/todos', todoRoutes)
 

@@ -7,15 +7,15 @@ import TodoItem from './TodoItem'
 const Todos = () => {
 	const [clicked, setClicked] = useState(false)
 	const [todo, setTodo] = useState({ todo: '' })
-	// Get todo from database
+	// Get TODO from database
 	const [todos, setTodos] = useState([])
 
 	useEffect(() => {
 		TodoService.getTodos().then((data) => {
-			// data comes from controller getTodos: -- >
+			// Data comes from controller getTodos: -- >
 			// todos: todos,
 			// count: todosCount
-			// todo comes from controller addTodo: -->
+			// TODO comes from controller addTodo: -->
 			// todo: req.body.todo,
 			// created: Date.now(),
 			// completed: false,
@@ -35,7 +35,6 @@ const Todos = () => {
 		TodoService.createTodo(todo).then((data) => {
 			resetTodoForm()
 			TodoService.getTodos().then((getData) => {
-				setClicked(false)
 				setTodos(getData.todos)
 			})
 		})
@@ -54,24 +53,10 @@ const Todos = () => {
 
 		TodoService.getTodos()
 			.then((data) => {
-				const filteredTodos = data.todos.filter((todo) => todo._id !== todoID)
-				setTodos([...filteredTodos])
-			})
-			.catch((err) => {
-				console.log(err)
-			})
-	}
-
-	function handleToggleComplete(todo) {
-		TodoService.toggleComplete(todo._id)
-			.then((data) => {
-				console.log(data)
-				TodoService.getTodos().then((data) => {
-					const filteredTodos = data.todos.filter((todo) =>
-						clicked ? todo.completed : !todo.completed
-					)
-					setTodos([...filteredTodos])
-				})
+				const filteredTodos = data.todos
+					.filter((todo) => todo._id !== todoID)
+					.filter((todo) => (clicked ? todo.completed : !todo.completed))
+				setTodos(filteredTodos)
 			})
 			.catch((err) => {
 				console.log(err)
@@ -88,12 +73,7 @@ const Todos = () => {
 			{todos &&
 				todos.map((todo) => {
 					return (
-						<TodoItem
-							key={todo._id}
-							todo={todo}
-							onRemove={handleRemoveTodo}
-							onToggleComplete={handleToggleComplete}
-						/>
+						<TodoItem key={todo._id} todo={todo} onRemove={handleRemoveTodo} />
 					)
 				})}
 		</section>

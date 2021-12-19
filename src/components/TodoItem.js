@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import TodoService from '../services/TodoService'
 
-const TodoItem = ({ todo, onRemove, onToggleComplete }) => {
+const TodoItem = ({ todo, onRemove }) => {
 	const [toggle, setToggle] = useState(false)
 
 	const todoID = todo._id

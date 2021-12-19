@@ -1,13 +1,13 @@
 const CreateTodo = ({ onTodoChange, onTodoSubmit, todo }) => {
 	function handleSubmit(e) {
 		e.preventDefault()
-		console.log(todo)
-		onTodoSubmit(todo)
 
+		// Check if an empty input value
 		if (!todo.todo) {
 			alert('Please add task')
 			return
 		}
+		onTodoSubmit(todo)
 	}
 
 	function handleChange(e) {

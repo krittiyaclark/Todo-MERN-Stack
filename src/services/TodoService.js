@@ -6,7 +6,7 @@ export default {
 	},
 	createTodo: (todo) => {
 		console.log('todo service: ')
-		// todo comes from useState todo
+		// TODO comes from useState todo
 		return fetch('/todos/addTodo', {
 			method: 'POST',
 			body: JSON.stringify({
@@ -28,7 +28,6 @@ export default {
 				todoID: todoID,
 			}),
 		}).then((response) => {
-			// location.reload()
 			response.json()
 		})
 	},
