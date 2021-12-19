@@ -23,10 +23,6 @@ const TodoItem = ({ todo, onRemove, onToggleComplete }) => {
 	}
 	// Date Formatting
 	let date = new Date(todo.created).toDateString()
-	date = date.split('')
-	date.splice(3, 0, ', ')
-	date.splice(-5, 0, ', ')
-	date = date.join('')
 
 	return (
 		<section className='todo-list'>

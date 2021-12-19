@@ -30,6 +30,7 @@ module.exports = {
 		console.log('blah ' + req.body.todoID)
 		try {
 			await Todo.findById(req.body.todoID, (err, todo) => {
+				console.log(todo)
 				if (err) {
 					console.log(err)
 				}
@@ -44,8 +45,8 @@ module.exports = {
 		try {
 			await Todo.findOneAndDelete({ _id: req.body.todoID })
 
-			console.log('Deleted Todo')
 			res.json('Deleted Todo')
+			console.log('Deleted Todo')
 		} catch (err) {
 			console.log(err)
 		}

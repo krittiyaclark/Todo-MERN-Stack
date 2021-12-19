@@ -15,6 +15,7 @@ const { NODE_ENV, PORT } = process.env
 
 const server = express()
 
+// Parse JSON using express
 server.use(express.urlencoded({ extended: false }))
 server.use(express.json())
 
