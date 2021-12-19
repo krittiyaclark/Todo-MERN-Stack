@@ -8,19 +8,24 @@ const TodoItem = ({ todo, onRemove, onToggleComplete }) => {
 
 	const todoID = todo._id
 	const navigate = useNavigate()
+	console.log(todoID)
+	console.log(onToggleComplete)
 
 	const handleRemove = (e) => {
 		e.preventDefault()
+		console.log(todoID)
 
 		TodoService.removeTodo(todoID).then((data) => console.log(data))
-		navigate('/todos')
+		// navigate('/todos')
 
 		onRemove(todoID)
 	}
 
 	const handleToggleComplete = () => {
+		TodoService.toggleComplete(todoID).then((data) => console.log(data))
 		setToggle(!toggle)
 	}
+
 	// Date Formatting
 	let date = new Date(todo.created).toDateString()
 

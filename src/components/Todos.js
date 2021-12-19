@@ -55,6 +55,8 @@ const Todos = () => {
 	}
 
 	function handleRemoveTodo(todoID) {
+		console.log(todo._id)
+
 		TodoService.removeTodo(todoID)
 			.then((data) => console.log(data))
 			.catch((err) => {
@@ -74,6 +76,7 @@ const Todos = () => {
 	}
 
 	function handleToggleComplete(todo) {
+		console.log(todo._id)
 		TodoService.toggleComplete(todo._id)
 			.then((data) => {
 				console.log(data)

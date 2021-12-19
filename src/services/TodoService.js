@@ -32,7 +32,7 @@ export default {
 				todoID: todoID,
 			}),
 		}).then((response) => {
-			location.reload()
+			// location.reload()
 			response.json()
 		})
 	},

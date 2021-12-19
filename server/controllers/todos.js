@@ -29,15 +29,20 @@ module.exports = {
 	toggleComplete: async (req, res) => {
 		console.log('blah ' + req.body.todoID)
 		try {
-			await Todo.findById(req.body.todoID, (err, todo) => {
-				console.log(todo)
-				if (err) {
-					console.log(err)
-				}
-				todo.completed = !todo.completed
-			})
+			const oldTodo = await Todo.findById(req.body.todoID)
+			if (!oldTodo) {
+				throw new Error('invalid id given or general error')
+			}
+			const result = await Todo.findOneAndUpdate(
+				{ _id: req.body.todoID },
+				{ completed: !oldTodo.completed },
+				{ upsert: true }
+			)
+			res.sendStatus(200)
+			console.log(result)
 		} catch (err) {
 			console.log(err)
+			res.sendStatus(500)
 		}
 	},
 	removeTodo: async (req, res) => {
