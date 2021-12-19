@@ -19,7 +19,7 @@ const server = express()
 server.use(express.urlencoded({ extended: false }))
 server.use(express.json())
 
-// Core
+// Middleware
 const cors = require('cors')
 server.use(cors())
 

@@ -1,5 +1,5 @@
 const CreateTodo = ({ onTodoChange, onTodoSubmit, todo }) => {
-	function handleSubmit(e) {
+	const handleSubmit = (e) => {
 		e.preventDefault()
 
 		// Check if an empty input value
@@ -10,7 +10,7 @@ const CreateTodo = ({ onTodoChange, onTodoSubmit, todo }) => {
 		onTodoSubmit(todo)
 	}
 
-	function handleChange(e) {
+	const handleChange = (e) => {
 		onTodoChange({ todo: e.target.value })
 	}
 

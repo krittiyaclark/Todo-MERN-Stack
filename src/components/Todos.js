@@ -7,7 +7,7 @@ import TodoItem from './TodoItem'
 const Todos = () => {
 	const [clicked, setClicked] = useState(false)
 	const [todo, setTodo] = useState({ todo: '' })
-	// Get TODO from database
+	// Store TODOs. Get TODO from database
 	const [todos, setTodos] = useState([])
 
 	useEffect(() => {
@@ -27,24 +27,25 @@ const Todos = () => {
 		})
 	}, [])
 
-	function handleTodoChange(todo) {
+	const handleTodoChange = (todo) => {
 		setTodo(todo)
 	}
 
-	function handleTodoSubmit() {
+	const handleTodoSubmit = () => {
 		TodoService.createTodo(todo).then((data) => {
 			resetTodoForm()
+			// Get all updated TODO
 			TodoService.getTodos().then((getData) => {
 				setTodos(getData.todos)
 			})
 		})
 	}
 
-	function resetTodoForm() {
+	const resetTodoForm = () => {
 		setTodo({ todo: '' })
 	}
 
-	function handleRemoveTodo(todoID) {
+	const handleRemoveTodo = (todoID) => {
 		TodoService.removeTodo(todoID)
 			.then((data) => console.log(data))
 			.catch((err) => {
