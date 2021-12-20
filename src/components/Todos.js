@@ -54,9 +54,7 @@ const Todos = () => {
 
 		TodoService.getTodos()
 			.then((data) => {
-				const filteredTodos = data.todos
-					.filter((todo) => todo._id !== todoID)
-					.filter((todo) => (clicked ? todo.completed : !todo.completed))
+				const filteredTodos = data.todos.filter((todo) => todo._id !== todoID)
 				setTodos(filteredTodos)
 			})
 			.catch((err) => {

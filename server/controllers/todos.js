@@ -30,16 +30,13 @@ module.exports = {
 		console.log('blah ' + req.body.todoID)
 		try {
 			const oldTodo = await Todo.findById(req.body.todoID)
-			if (!oldTodo) {
-				throw new Error('invalid id given or general error')
-			}
-			const result = await Todo.findOneAndUpdate(
+			await Todo.findOneAndUpdate(
 				{ _id: req.body.todoID },
 				{ completed: !oldTodo.completed },
 				{ upsert: true }
 			)
+			// Prevent the frontend throws an error or timeout.
 			res.sendStatus(200)
-			console.log(result)
 		} catch (err) {
 			console.log(err)
 			res.sendStatus(500)
